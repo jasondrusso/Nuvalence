@@ -32,6 +32,22 @@ public class Rectangle {
         this.left = new Line(topLeft, bottomLeft);
         this.right = new Line(topRight, bottomRight);
     }
+    
+    public Rectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
+            throws InvalidObjectException {
+        if (topLeft == null || topRight == null || bottomLeft == null || bottomRight == null)
+            throw new InvalidObjectException("Rectangle must have four points defined");
+        
+        this.topLeft = topLeft;
+        this.topRight = topRight;
+        this.bottomLeft = bottomLeft;
+        this.bottomRight = bottomRight;
+        
+        this.top = new Line(topLeft, topRight);
+        this.bottom = new Line(bottomLeft, bottomRight);
+        this.left = new Line(topLeft, bottomLeft);
+        this.right = new Line(topRight, bottomRight);
+    }
 
     public Point getTopLeft() {
         return topLeft;

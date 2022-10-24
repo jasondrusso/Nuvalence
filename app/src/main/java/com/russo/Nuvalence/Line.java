@@ -34,8 +34,10 @@ public class Line {
      * @return          True if lines cross, false if not.
      */
     public boolean isCrossed(Line other) {
-        return (this.p1.direction(this.p2, other.p1) * this.p1.direction(this.p2, other.p2) < 0) &&
-                (other.p1.direction(other.p2, this.p1) * other.p1.direction(other.p2, this.p2) < 0);
+        return (this.p1.direction(this.p2, other.p1)
+                        * this.p1.direction(this.p2, other.p2) < 0) &&
+                (other.p1.direction(other.p2, this.p1)
+                        * other.p1.direction(other.p2, this.p2) < 0);
     }
     
     /**
@@ -44,10 +46,10 @@ public class Line {
      * @return 
      */
     public boolean isConnected(Line other) {
-        return (!this.isCollinear(other) && 
-                this.p1.direction(this.p2, other.p1) * this.p1.direction(this.p2, other.p2) == 0) ||
-                (!other.isCollinear(this) &&
-                other.p1.direction(other.p2, this.p1) * other.p1.direction(other.p2, this.p2) == 0);
+        return (!this.isCollinear(other) && this.p1.direction(this.p2, other.p1)
+                        * this.p1.direction(this.p2, other.p2) == 0)
+                || (!other.isCollinear(this) && other.p1.direction(other.p2, this.p1)
+                        * other.p1.direction(other.p2, this.p2) == 0);
     }
     
     /**
@@ -58,8 +60,10 @@ public class Line {
      * @return 
      */
     public boolean isAdjacent(Line other) {
-        return this.isPointOnSegment(other.p1) || this.isPointOnSegment(other.p2) ||
-                other.isPointOnSegment(this.p1) || other.isPointOnSegment(this.p2);
+        return this.isPointOnSegment(other.p1) ||
+                this.isPointOnSegment(other.p2) ||
+                other.isPointOnSegment(this.p1) ||
+                other.isPointOnSegment(this.p2);
     }
     
     /**
@@ -72,8 +76,10 @@ public class Line {
      */
     boolean isPointOnSegment(Point p) {
         return ((p.direction(this.p1, this.p2) == 0) &&
-                (p.x >= Math.min(this.p1.x, this.p2.x) && (p.x <= Math.max(this.p1.x, this.p2.x))) &&
-                (p.y >= Math.min(this.p1.y, this.p2.y) && (p.y <= Math.max(this.p1.y, this.p2.y))));
+                (p.x >= Math.min(this.p1.x, this.p2.x) &&
+                (p.x <= Math.max(this.p1.x, this.p2.x))) &&
+                (p.y >= Math.min(this.p1.y, this.p2.y) &&
+                (p.y <= Math.max(this.p1.y, this.p2.y))));
     }
     
     /**

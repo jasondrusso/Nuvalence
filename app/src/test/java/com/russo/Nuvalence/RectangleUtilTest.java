@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RectangleUtilTest {
     
     @Test
-    public void testIntersecting() throws InvalidObjectException {
+    public void testIntersecting1() throws InvalidObjectException {
         Point topLeft1 = new Point(2.0, 9.0);
         Point bottomRight1 = new Point(9.0, 2.0);
         
@@ -24,6 +24,24 @@ public class RectangleUtilTest {
         
         Rectangle rect1 = new Rectangle(topLeft1, bottomRight1);
         Rectangle rect2 = new Rectangle(topLeft2, bottomRight2);
+        
+        assertTrue(RectangleUtil.isIntersecting(rect1, rect2));
+    }
+    
+    @Test
+    public void testIntersecting2() throws InvalidObjectException {
+        Point topLeft1 = new Point(0.0, 3.0);
+        Point topRight1 = new Point(3.0, 6.0);
+        Point bottomLeft1 = new Point(3.0, 0.0);
+        Point bottomRight1 = new Point(6.0, 3.0);
+        
+        Point topLeft2 = new Point(1.0, 5.0);
+        Point topRight2 = new Point(5.0, 5.0);
+        Point bottomLeft2 = new Point(1.0, 1.0);
+        Point bottomRight2 = new Point(5.0, 1.0);
+        
+        Rectangle rect1 = new Rectangle(topLeft1, topRight1, bottomLeft1, bottomRight1);
+        Rectangle rect2 = new Rectangle(topLeft2, topRight2, bottomLeft2, bottomRight2);
         
         assertTrue(RectangleUtil.isIntersecting(rect1, rect2));
     }
@@ -71,7 +89,25 @@ public class RectangleUtilTest {
     }
     
     @Test
-    public void testIsNotContained() throws InvalidObjectException {
+    public void testIsContained3() throws InvalidObjectException {
+        Point topLeft1 = new Point(0.0, 3.0);
+        Point topRight1 = new Point(3.0, 6.0);
+        Point bottomLeft1 = new Point(3.0, 0.0);
+        Point bottomRight1 = new Point(6.0, 3.0);
+        
+        Point topLeft2 = new Point(2.0, 4.0);
+        Point topRight2 = new Point(4.0, 4.0);
+        Point bottomLeft2 = new Point(2.0, 2.0);
+        Point bottomRight2 = new Point(4.0, 2.0);
+        
+        Rectangle rect1 = new Rectangle(topLeft1, topRight1, bottomLeft1, bottomRight1);
+        Rectangle rect2 = new Rectangle(topLeft2, topRight2, bottomLeft2, bottomRight2);
+        
+        assertTrue(RectangleUtil.isContained(rect1, rect2));
+    }
+    
+    @Test
+    public void testIsNotContained1() throws InvalidObjectException {
         Point topLeft1 = new Point(2.0, 9.0);
         Point bottomRight1 = new Point(9.0, 2.0);
         
@@ -80,6 +116,24 @@ public class RectangleUtilTest {
         
         Rectangle rect1 = new Rectangle(topLeft1, bottomRight1);
         Rectangle rect2 = new Rectangle(topLeft2, bottomRight2);
+        
+        assertFalse(RectangleUtil.isContained(rect1, rect2));
+    }
+    
+    @Test
+    public void testIsNotContained2() throws InvalidObjectException {
+        Point topLeft1 = new Point(0.0, 3.0);
+        Point topRight1 = new Point(3.0, 6.0);
+        Point bottomLeft1 = new Point(3.0, 0.0);
+        Point bottomRight1 = new Point(6.0, 3.0);
+        
+        Point topLeft2 = new Point(1.0, 5.0);
+        Point topRight2 = new Point(5.0, 5.0);
+        Point bottomLeft2 = new Point(1.0, 1.0);
+        Point bottomRight2 = new Point(5.0, 1.0);
+        
+        Rectangle rect1 = new Rectangle(topLeft1, topRight1, bottomLeft1, bottomRight1);
+        Rectangle rect2 = new Rectangle(topLeft2, topRight2, bottomLeft2, bottomRight2);
         
         assertFalse(RectangleUtil.isContained(rect1, rect2));
     }
