@@ -4,6 +4,7 @@
  */
 package com.russo.Nuvalence;
 
+import java.io.InvalidObjectException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ public class RectangleUtil {
     }
     
     /**
-     * Test whether rectangles intersect.
+     * Test whether rectangles intersect. Rectangles intersect if any lines cross.
      * 
      * @param r1
      * @param r2
@@ -39,18 +40,32 @@ public class RectangleUtil {
     }
     
     /**
-     * Test whether either rectangle is contained within the other
+     * Test whether either rectangle is contained within the other. Assuming
+     * if any sides touch it still produces true result if vertices of smaller
+     * are within or equal to bounds of larger.
      * 
      * @param r1
      * @param r2
      * 
      * @return 
+     * @throws java.io.InvalidObjectException 
      */
-    public static boolean isContained(Rectangle r1, Rectangle r2) {
+    public static boolean isContained(Rectangle r1, Rectangle r2) throws
+            InvalidObjectException {
         return !isIntersecting(r1, r2) && (isWithin(r1, r2) || isWithin(r2, r1));
     }
     
-    public static boolean isAdjacent(Rectangle r1, Rectangle r2) {
+    /**
+     * Test whether either rectangle is adjacent to the other.Adjacent means one
+     * side is touching and rectangles are not contained.
+     * 
+     * @param r1
+     * @param r2
+     * @return 
+     * @throws java.io.InvalidObjectException 
+     */
+    public static boolean isAdjacent(Rectangle r1, Rectangle r2) throws
+            InvalidObjectException {
         return !isContained(r1, r2) && isEdgeAdjacent(r1, r2);
     }
     
@@ -68,11 +83,15 @@ public class RectangleUtil {
         return false;
     }
     
-    private static boolean isWithin(Rectangle outer, Rectangle inner) {
-        List<Double> outerX = getVerticies(outer, Axis.X);
-        List<Double> outerY = getVerticies(outer, Axis.Y);
-        List<Double> innerX = getVerticies(inner, Axis.X);
-        List<Double> innerY = getVerticies(inner, Axis.Y);
+    private static boolean isWithin(Rectangle outer, Rectangle inner)
+            throws InvalidObjectException {
+        List<Double> outerX = getVertices(outer, Axis.X);
+        List<Double> outerY = getVertices(outer, Axis.Y);
+        List<Double> innerX = getVertices(inner, Axis.X);
+        List<Double> innerY = getVertices(inner, Axis.Y);
+        
+        if (outerX == null || outerY == null || innerX == null || innerY == null)
+            throw new InvalidObjectException("Cannot calculate from invalid rectangle");
         
         double minOuterX = Collections.min(outerX);
         double maxOuterX = Collections.max(outerX);
@@ -86,11 +105,11 @@ public class RectangleUtil {
         double minInnerY = Collections.min(innerY);
         double maxInnerY = Collections.max(innerY);
         
-        return minOuterX < minInnerX && maxOuterX > maxInnerX &&
-                minOuterY < minInnerY && maxOuterY > maxInnerY;
+        return minOuterX <= minInnerX && maxOuterX >= maxInnerX &&
+                minOuterY <= minInnerY && maxOuterY >= maxInnerY;
     }
     
-    private static List<Double> getVerticies(Rectangle rect, Axis axis) {
+    private static List<Double> getVertices(Rectangle rect, Axis axis) {
         switch (axis) {
             case X:
                 return Arrays.asList(
