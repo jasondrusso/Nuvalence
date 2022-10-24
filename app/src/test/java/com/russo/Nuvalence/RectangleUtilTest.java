@@ -139,7 +139,7 @@ public class RectangleUtilTest {
     }
     
     @Test
-    public void testIsAdjacent() throws InvalidObjectException {
+    public void testIsAdjacent1() throws InvalidObjectException {
         Point topLeft1 = new Point(2.0, 9.0);
         Point bottomRight1 = new Point(9.0, 2.0);
         
@@ -148,6 +148,24 @@ public class RectangleUtilTest {
         
         Rectangle rect1 = new Rectangle(topLeft1, bottomRight1);
         Rectangle rect2 = new Rectangle(topLeft2, bottomRight2);
+        
+        assertTrue(RectangleUtil.isAdjacent(rect1, rect2));
+    }
+    
+    @Test
+    public void testIsAdjacent2() throws InvalidObjectException {
+        Point topLeft1 = new Point(0.0, 3.0);
+        Point topRight1 = new Point(3.0, 6.0);
+        Point bottomLeft1 = new Point(3.0, 0.0);
+        Point bottomRight1 = new Point(6.0, 3.0);
+        
+        Point topLeft2 = new Point(1.5, 7.5);
+        Point topRight2 = new Point(4.5, 10.5);
+        Point bottomLeft2 = new Point(4.5, 4.5);
+        Point bottomRight2 = new Point(7.5, 7.5);
+        
+        Rectangle rect1 = new Rectangle(topLeft1, topRight1, bottomLeft1, bottomRight1);
+        Rectangle rect2 = new Rectangle(topLeft2, topRight2, bottomLeft2, bottomRight2);
         
         assertTrue(RectangleUtil.isAdjacent(rect1, rect2));
     }
@@ -162,6 +180,24 @@ public class RectangleUtilTest {
         
         Rectangle rect1 = new Rectangle(topLeft1, bottomRight1);
         Rectangle rect2 = new Rectangle(topLeft2, bottomRight2);
+        
+        assertFalse(RectangleUtil.isAdjacent(rect1, rect2));
+    }
+    
+    @Test
+    public void testIsNotAdjacent2() throws InvalidObjectException {
+        Point topLeft1 = new Point(0.0, 3.0);
+        Point topRight1 = new Point(3.0, 6.0);
+        Point bottomLeft1 = new Point(3.0, 0.0);
+        Point bottomRight1 = new Point(6.0, 3.0);
+        
+        Point topLeft2 = new Point(2.5, 7.5);
+        Point topRight2 = new Point(5.5, 10.5);
+        Point bottomLeft2 = new Point(5.5, 4.5);
+        Point bottomRight2 = new Point(8.5, 7.5);
+        
+        Rectangle rect1 = new Rectangle(topLeft1, topRight1, bottomLeft1, bottomRight1);
+        Rectangle rect2 = new Rectangle(topLeft2, topRight2, bottomLeft2, bottomRight2);
         
         assertFalse(RectangleUtil.isAdjacent(rect1, rect2));
     }
