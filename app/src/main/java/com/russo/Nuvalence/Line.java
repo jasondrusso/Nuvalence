@@ -51,6 +51,8 @@ public class Line {
     }
     
     /**
+     * Tests if other line is adjacent to this.  Adjacent means both lines are collinear
+     * and at least one endpoint of one line is within bounds of the other segment.
      * 
      * @param other
      * @return 
@@ -68,7 +70,7 @@ public class Line {
      * 
      * @return          True is point is on segment, false if not
      */
-    public boolean isPointOnSegment(Point p) {
+    boolean isPointOnSegment(Point p) {
         return ((p.direction(this.p1, this.p2) == 0) &&
                 (p.x >= Math.min(this.p1.x, this.p2.x) && (p.x <= Math.max(this.p1.x, this.p2.x))) &&
                 (p.y >= Math.min(this.p1.y, this.p2.y) && (p.y <= Math.max(this.p1.y, this.p2.y))));
@@ -84,22 +86,5 @@ public class Line {
     boolean isCollinear(Line other) {
         return this.p1.direction(this.p2, other.p1) == 0 &&
                 this.p1.direction(this.p2, other.p2) == 0;
-    }
-    
-    Point getIntersection(Line other) {
-        double thisSlope, otherSlope, thisB, otherB, X, Y;
-        
-        thisSlope = this.p2.x - this.p1.x == 0 ? this.p2.y :
-                (this.p2.y - this.p1.y) / (this.p2.x - this.p1.x);
-        otherSlope = other.p2.x - other.p1.x == 0.0 ? other.p2.y :
-                (other.p2.y - other.p1.y) / (other.p2.x - other.p1.x);
-        
-        thisB = this.p1.y - thisSlope * this.p1.x;
-        otherB = other.p1.y - otherSlope * other.p1.x;
-        
-        X = (otherB - thisB) / (thisSlope - otherSlope);
-        Y = thisSlope * X + thisB;
-        
-        return new Point(X, Y);
     }
 }
